@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { createHmac } from 'node:crypto';
+import mongoose, { model, Schema } from "mongoose";
+import { createHmac, randomBytes } from 'node:crypto';
 
 const userSchema = new Schema(
     {
@@ -14,7 +14,6 @@ const userSchema = new Schema(
         },
         salt: {
             type: String,
-            required: true
         },
         password: {
             type: String,
@@ -38,7 +37,14 @@ userSchema.pre("save", function (next) {
 
     if(!user.isModified('password')) return;
 
-    
+    const salt = randomBytes(16).toString() //salt is like every user will have random 16 digit secret key
+    const hashedPassword = createHmac('sha256', salt).update(user.password).digest('hex')
+
+    //updating user object
+    this.salt = salt;
+    this.password = hashedPassword
+
+    next()
 })
 
 export const User = model('user', userSchema)
