@@ -6,9 +6,6 @@
   </head>
   <body>
     <%- include('./partial/nav') %>
-      <% if (locals.user) { %>
-       <p> <%= JSON.stringify(user) %></p>
-      <% } %>
     <div class="container mt-3">
       <form action="/blog" method="post" enctype="multipart/form-data">
         <div class="mb-3">

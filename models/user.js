@@ -22,7 +22,7 @@ const userSchema = new Schema(
         },
         profileImageURL: {
             type: String,
-            default: "../public/image/istockphoto-1337144146-612x612.jpg",
+            default: "/image/istockphoto-1337144146-612x612.jpg",
         },
         role: {
             type: String,
