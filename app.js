@@ -1,3 +1,4 @@
+require('dotenv').config();
 import express from 'express';
 import path from 'path';
 import { router as userRoute } from './routes/user.js';
@@ -8,11 +9,9 @@ import { checkForAuthenticationCookie } from './middlewares/authentication.js';
 import { Blog } from './models/blog.js';
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
-connectMongoDb(
-    'mongodb+srv://vedunaik777:jaibhavani@cluster1.8gmaklo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1'
-);
+connectMongoDb(process.env.MONGODB_URL);
 
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'));
